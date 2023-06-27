@@ -1,10 +1,13 @@
 "use client";
 
+import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Page = () => {
   const [input, setInput] = useState<string>("");
+  const router = useRouter();
 
   return (
     <div className="container flex items-center h-full max-w-3xl mx-auto">
@@ -29,6 +32,13 @@ const Page = () => {
               className="pl-6"
             />
           </div>
+        </div>
+
+        <div className="flex justify-end gap-4">
+          <Button variant="subtle" onClick={() => router.back()}>
+            Cancel
+          </Button>
+          <Button>Create Community</Button>
         </div>
       </div>
     </div>
