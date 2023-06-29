@@ -81,7 +81,7 @@ export async function PATCH(req: Request) {
 
         await countAndCache(post, postId);
 
-        return new Response("OK");
+        return new Response("Same vote type: OK");
       }
 
       // if vote type is different, update the vote
@@ -99,7 +99,7 @@ export async function PATCH(req: Request) {
 
       await countAndCache(post, postId);
 
-      return new Response("OK");
+      return new Response("Different vote type: OK");
     }
 
     // if no existing vote, create a new vote
@@ -113,7 +113,7 @@ export async function PATCH(req: Request) {
 
     await countAndCache(post, postId);
 
-    return new Response("OK");
+    return new Response("No existing vote: OK");
   } catch (error) {
     error;
     if (error instanceof z.ZodError) {
