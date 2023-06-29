@@ -115,7 +115,6 @@ export async function PATCH(req: Request) {
 
     return new Response("No existing vote: OK");
   } catch (error) {
-    error;
     if (error instanceof z.ZodError) {
       return new Response("Invalid POST request data passed", { status: 422 });
     }
