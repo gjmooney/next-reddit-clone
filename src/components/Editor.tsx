@@ -9,14 +9,16 @@ import type EditorJS from "@editorjs/editorjs";
 import { uploadFiles } from "@/lib/uploadthing";
 import { toast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { usePathname, useRouter } from "next/navigation";
+import { useCustomToast } from "@/hooks/use-custom-toast";
 
 interface EditorProps {
   subredditId: string;
 }
 
 const Editor: FC<EditorProps> = ({ subredditId }) => {
+  const { loginToast } = useCustomToast();
   // The resolver handles type checking
   const {
     register,
@@ -127,6 +129,7 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
     if (Object.keys(errors).length) {
       for (const [_key, value] of Object.entries(errors)) {
         toast({
+          key: _key,
           title: "Something went wrong.",
           description: (value as { message: string }).message,
           variant: "destructive",
@@ -150,7 +153,12 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
       const { data } = await axios.post("/api/subreddit/post/create", payload);
       return data;
     },
-    onError: () => {
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          return loginToast();
+        }
+      }
       return toast({
         title: "Something went wrong",
         description: "Your post was not published. Please try again later",
