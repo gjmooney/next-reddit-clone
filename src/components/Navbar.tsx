@@ -3,6 +3,7 @@ import { Icons } from "./Icons";
 import { buttonVariants } from "./ui/Button";
 import UserAccountNav from "./UserAccountNav";
 import { getAuthSession } from "@/lib/auth";
+import SearchBar from "./SearchBar";
 
 const Navbar = async () => {
   const session = await getAuthSession();
@@ -19,6 +20,7 @@ const Navbar = async () => {
         </Link>
 
         {/* Search bar */}
+        <SearchBar />
 
         {/* Login */}
         {session?.user ? (
