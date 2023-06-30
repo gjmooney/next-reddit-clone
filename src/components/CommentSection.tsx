@@ -32,7 +32,7 @@ const CommentSection = async ({ postId }: CommentSectionProps) => {
     <div className="flex flex-col gap-y-4 mt-4">
       <hr className="w-full h-px my-6" />
       {/** TODO:  Create comment */}
-      <CreateComment />
+      <CreateComment postId={postId} />
 
       <div className="flex flex-col gap-y-6 mt-4">
         {comments
@@ -53,7 +53,12 @@ const CommentSection = async ({ postId }: CommentSectionProps) => {
             return (
               <div key={topLevelComment.id} className="flex flex-col">
                 <div className="mb-2">
-                  <PostComment comment={topLevelComment} />
+                  <PostComment
+                    postId={postId}
+                    votesAmount={topLevelCommentVotesAmount}
+                    currentVote={topLevelCommentVote}
+                    comment={topLevelComment}
+                  />
                 </div>
               </div>
             );

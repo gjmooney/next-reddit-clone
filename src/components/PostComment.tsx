@@ -1,9 +1,10 @@
 "use client";
 
-import { FC, useRef } from "react";
-import UserAvatar from "./UserAvatar";
-import { Comment, CommentVote, User } from "@prisma/client";
 import { formatTimeToNow } from "@/lib/utils";
+import { Comment, CommentVote, User } from "@prisma/client";
+import { FC, useRef } from "react";
+import CommentVotes from "./CommentVotes";
+import UserAvatar from "./UserAvatar";
 
 type ExtendedComment = Comment & {
   author: User;
@@ -12,10 +13,19 @@ type ExtendedComment = Comment & {
 
 interface PostCommentProps {
   comment: ExtendedComment;
+  votesAmount: number;
+  currentVote: CommentVote | undefined;
+  postId: string;
 }
 
-const PostComment: FC<PostCommentProps> = ({ comment }) => {
+const PostComment: FC<PostCommentProps> = ({
+  comment,
+  votesAmount,
+  currentVote,
+  postId,
+}) => {
   const commentRef = useRef<HTMLDivElement>(null);
+
   return (
     <div ref={commentRef} className="flex flex-col">
       <div className="flex items-center">
@@ -30,12 +40,19 @@ const PostComment: FC<PostCommentProps> = ({ comment }) => {
           <p className="text-sm font-medium text-gray-900">
             u/{comment.author.username}
           </p>
-          <time className="max-h-40 truncate text-xs text-zinc-500">
+          <p className="max-h-40 truncate text-xs text-zinc-500">
             {formatTimeToNow(new Date(comment.createdAt))}
-          </time>
+          </p>
         </div>
       </div>
       <p className="text-sm text-zinc-900 mt-2">{comment.text}</p>
+      <div className="flex gap-2 items-center">
+        <CommentVotes
+          commentId={comment.id}
+          initialVotesAmount={votesAmount}
+          initialVote={currentVote}
+        />
+      </div>
     </div>
   );
 };
