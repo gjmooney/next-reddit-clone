@@ -45,11 +45,11 @@ const SearchBar: FC<SearchBarProps> = ({}) => {
 
   const request = debounce(() => {
     refetch();
-  });
+  }, 300);
 
   const debounceRequest = useCallback(() => {
     request();
-  }, [request]);
+  }, []);
 
   return (
     <Command className="relative rounded-lg border max-w-lg z-50 overflow-visible">
