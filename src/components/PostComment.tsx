@@ -27,6 +27,7 @@ interface PostCommentProps {
   votesAmount: number;
   currentVote: CommentVote | undefined;
   postId: string;
+  replyToId?: string | null;
 }
 
 const PostComment: FC<PostCommentProps> = ({
@@ -34,6 +35,7 @@ const PostComment: FC<PostCommentProps> = ({
   votesAmount,
   currentVote,
   postId,
+  replyToId,
 }) => {
   const commentRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -97,19 +99,21 @@ const PostComment: FC<PostCommentProps> = ({
           initialVote={currentVote}
         />
 
-        <Button
-          variant="ghost"
-          size="xs"
-          onClick={() => {
-            if (!session) {
-              return router.push("/sign-in");
-            }
-            setIsReplying(true);
-          }}
-        >
-          <MessageSquare className="w-4 h-4 mr-1.5" />
-          Reply
-        </Button>
+        {!replyToId ? (
+          <Button
+            variant="ghost"
+            size="xs"
+            onClick={() => {
+              if (!session) {
+                return router.push("/sign-in");
+              }
+              setIsReplying(true);
+            }}
+          >
+            <MessageSquare className="w-4 h-4 mr-1.5" />
+            Reply
+          </Button>
+        ) : null}
 
         {isReplying ? (
           <div className="grid w-full gap-1.5">

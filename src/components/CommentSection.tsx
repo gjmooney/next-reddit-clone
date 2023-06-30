@@ -72,7 +72,7 @@ const CommentSection = async ({ postId }: CommentSectionProps) => {
                       return acc;
                     }, 0);
 
-                    const replyVote = topLevelComment.votes.find(
+                    const replyVote = reply.votes.find(
                       (vote) => vote.userId === session?.user.id
                     );
                     return (
@@ -85,6 +85,7 @@ const CommentSection = async ({ postId }: CommentSectionProps) => {
                           currentVote={replyVote}
                           votesAmount={replyVotesAmount}
                           postId={postId}
+                          replyToId={reply.replyToId}
                         />
                       </div>
                     );
