@@ -52,7 +52,6 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
   }, [entry, fetchNextPage]);
 
   // ?? checks if preceding value is null or undefined
-
   const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
 
   return (
