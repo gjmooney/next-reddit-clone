@@ -30,12 +30,12 @@ const PostComment: FC<PostCommentProps> = ({ comment }) => {
           <p className="text-sm font-medium text-gray-900">
             u/{comment.author.username}
           </p>
-          <p className="max-h-40 truncate text-xs text-zinc-500">
+          <time className="max-h-40 truncate text-xs text-zinc-500">
             {formatTimeToNow(new Date(comment.createdAt))}
-          </p>
+          </time>
         </div>
       </div>
-      PostComment
+      <p className="text-sm text-zinc-900 mt-2">{comment.text}</p>
     </div>
   );
 };
